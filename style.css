@@ -1,0 +1,2677 @@
+@import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif !important;
+    font-weight: 400 !important;
+}
+
+/* Loading Screen */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0F1419;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+}
+
+.loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid #262E38;
+    border-top-color: #0098EA;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-text {
+    color: #FFFFFF;
+    font-size: 16px;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+}
+
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #1C222B;
+    color: #ffffff;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+}
+
+.content {
+    flex: 1;
+    background: #1C222B;
+    overflow-y: auto;
+}
+
+.footer {
+    height: 81px;
+    width: 100%;
+    background: #1F2733;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 20px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex: 1;
+    height: 100%;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.nav-icon {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-icon img {
+    width: 100%;
+    height: 100%;
+    filter: brightness(0) saturate(100%) invert(47%) sepia(5%) saturate(832%) hue-rotate(178deg) brightness(95%) contrast(89%);
+}
+
+.nav-text {
+    font-size: 12px;
+    color: #787E82;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif !important;
+    font-weight: 400 !important;
+}
+
+.nav-item.active .nav-icon img {
+    filter: brightness(0) saturate(100%) invert(42%) sepia(97%) saturate(1945%) hue-rotate(196deg) brightness(97%) contrast(93%);
+}
+
+.nav-item.active .nav-text {
+    color: #009AF1;
+}
+
+/* Полное отключение всех эффектов */
+.nav-item:focus,
+.nav-item:active,
+.nav-item:hover,
+.nav-item:focus-visible,
+.nav-item:focus-within {
+    outline: none !important;
+    box-shadow: none !important;
+    background: none !important;
+    border: none !important;
+    transform: none !important;
+}
+
+.nav-item * {
+    pointer-events: none;
+}
+
+.nav-item {
+    pointer-events: all;
+}
+
+/* Header Styles */
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: #202731;
+    padding: 8px 12px;
+    padding-top: 100px;
+    box-sizing: border-box;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    max-width: 30rem;
+    margin: 0 auto;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.balance-container {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: #27333F;
+    border-radius: 24px;
+    padding: 8px;
+}
+
+.balance-icon {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding-bottom: 2px;
+}
+
+.balance-tgs-animation {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-balance-tgs-animation {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.balance-amount {
+    font-size: 12px;
+    font-weight: 400;
+    color: #FFFFFF;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+}
+
+.add-balance-btn {
+    width: 28px;
+    height: 28px;
+    background: #0098EA;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 400;
+    color: #FFFFFF;
+}
+
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid #FFFFFF;
+}
+
+
+
+/* Отступ снизу для футера */
+.content {
+    padding-bottom: 81px;
+    padding-top: 76px;
+}
+
+/* Profile Section Styles */
+.profile-section {
+    padding: 0 17px;
+    padding-top: 100px;
+    height: calc(100vh - 81px - 76px);
+    overflow-y: auto;
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.profile-title {
+    font-size: 16px;
+    font-weight: 400;
+    color: #FFFFFF;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+}
+
+.info-button {
+    display: flex;
+    background: #262E38;
+    padding: 7px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+}
+
+.info-icon {
+    width: 24px;
+    height: 24px;
+    background: #FFFFFF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 19px;
+}
+
+.user-info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-avatar-container {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.profile-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 2px solid #FFFFFF;
+}
+
+.user-rank {
+    position: absolute;
+    top: -2px;
+    right: -10px;
+    padding: 4px 7px;
+    background: #262E38;
+    border-radius: 24px;
+    font-size: 10px;
+    font-weight: 400;
+    color: #FFFFFF;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+}
+
+.user-name {
+    font-size: 17px;
+    font-weight: 400;
+    color: #FFFFFF;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+}
+
+.user-id-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: transparent;
+    border: none;
+    color: #0098EA;
+    font-size: 10px;
+    font-weight: 500;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    cursor: pointer;
+}
+
+.eye-icon {
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.eye-icon:hover {
+    opacity: 0.7;
+}
+
+.balance-card {
+    display: flex;
+    width: 100%;
+    margin-top: 19px;
+    background: #262E38;
+    padding: 16px 12px;
+    border-radius: 8px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.balance-info {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: 8px;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+}
+
+.balance-value {
+    font-size: 16px;
+    font-weight: 400;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+}
+
+.get-balance-btn {
+    background: #0098EA;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    border-radius: 8px;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+}
+
+.referrals-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 8px;
+    background: #262E38;
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+.referrals-label {
+    display: flex;
+    align-items: center;
+    color: #CED1D6;
+    font-size: 12px;
+    font-weight: 400;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    margin-bottom: 4px;
+}
+
+.referrals-count {
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+}
+
+.referral-description {
+    color: #CED1D6;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+.referral-link-section {
+    margin-top: 16px;
+}
+
+.referral-link-title {
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    margin-bottom: 8px;
+    margin-top: 0;
+}
+
+.referral-link-container {
+    display: flex;
+    width: 100%;
+    margin-top: 8px;
+    background: #262E38;
+    padding: 12px 13px;
+    border-radius: 8px;
+    align-items: center;
+    gap: 4px;
+}
+
+.referral-link-input {
+    display: flex;
+    flex: 1;
+    background: #1C212A;
+    border-radius: 8px;
+    padding: 12px 16px;
+    align-items: center;
+    min-width: 0;
+    height: 44px;
+    border: none;
+    cursor: pointer;
+}
+
+.referral-link-text {
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    flex: 1;
+    min-width: 0;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (min-width: 640px) {
+    .referral-link-text {
+        font-size: 14px;
+    }
+}
+
+.share-btn {
+    background: #1C212A;
+    border-radius: 8px;
+    padding: 12.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Section management */
+.section {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.section.active {
+    display: block;
+}
+
+/* Inventory Section */
+.inventory-section {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 81px - 76px);
+    background: #1C222B;
+    padding: 0 17px;
+    overflow-y: auto;
+}
+
+.inventory-title {
+    margin-top: 80px;
+    margin-bottom: 24px;
+    color: #ffffff;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif !important;
+    font-weight: 400 !important;
+    font-size: 18px;
+}
+
+.tgs-animation {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 21px;
+    width: 102px;
+    height: 89px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 60px;
+}
+
+.no-gifts-text {
+    color: #ffffff;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif !important;
+    font-weight: 400 !important;
+    font-size: 20px;
+    text-align: center;
+    white-space: nowrap;
+    margin-bottom: 11px;
+}
+
+.send-gift-text {
+    color: #787E82;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif !important;
+    font-weight: 400 !important;
+    font-size: 11px;
+    text-align: center;
+    white-space: nowrap;
+    margin-bottom: 16px;
+}
+
+.username-link {
+    color: #009AF1;
+    text-decoration: underline;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+}
+
+.username-link:hover,
+.username-link:focus,
+.username-link:active {
+    color: #009AF1;
+    text-decoration: underline;
+    outline: none;
+}
+
+.action-button {
+    width: 177px;
+    height: 47px;
+    border-radius: 11px;
+    border: none;
+    color: #ffffff;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif !important;
+    font-weight: 400 !important;
+    font-size: 11px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 0 auto 8px auto;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    transform: none;
+    will-change: auto;
+}
+
+.cases-button {
+    background-color: #009AF1;
+}
+
+.profile-button {
+    background-color: #243240;
+}
+
+.button-icon {
+    width: 30px;
+    height: 30px;
+    filter: brightness(0) saturate(100%) invert(100%);
+    margin-left: 0px;
+}
+
+/* Убираем эффекты для кнопок */
+.action-button:focus,
+.action-button:active,
+.action-button:hover,
+.action-button:focus-visible,
+.action-button:focus-within {
+    outline: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+    border: none !important;
+}
+
+/* Cases Section */
+.case-section {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 81px - 76px);
+    background: #1C222B;
+    padding: 21px;
+    padding-top: 110px;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.cases-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 8px;
+}
+
+.product-card {
+    position: relative;
+    width: 100%;
+    background: #262E38;
+    border-radius: 24px;
+    padding: 16px;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card-content {
+    width: 100%;
+}
+
+.product-animation-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+    margin-bottom: 8px;
+}
+
+.product-animation-aspect-ratio {
+    height: 0;
+    width: 100%;
+    padding-top: 100%;
+}
+
+.product-animation-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.product-animation {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.product-price-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.product-price-chip {
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    width: fit-content;
+    border-radius: 24px;
+    gap: 8px;
+    height: 32px;
+    padding: 0 16px;
+    background: rgba(255, 187, 45, 0.2);
+}
+
+.price-star-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.product-price {
+    color: #ffc235;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    white-space: nowrap;
+}
+
+.product-corner-ribbon {
+    height: 75px;
+    overflow: hidden;
+    position: absolute;
+    right: -5px;
+    text-align: right;
+    top: -5px;
+    width: 75px;
+    z-index: 10;
+}
+
+.product-corner-ribbon span {
+    background: #0098EA;
+    color: #fff;
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 20px;
+    position: absolute;
+    right: -21px;
+    text-align: center;
+    text-transform: uppercase;
+    top: 19px;
+    transform: rotate(45deg);
+    width: 100px;
+}
+
+/* Balance Top-up Modal Styles */
+
+.balance-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1001;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.balance-modal.active {
+    display: flex;
+}
+
+.balance-modal-content {
+    background: #262E38;
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 350px;
+    width: 100%;
+    position: relative;
+}
+
+.balance-modal-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 24px;
+    position: relative;
+}
+
+.balance-modal-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 12px;
+}
+
+.balance-modal-title {
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: 400;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    margin: 0;
+    text-align: center;
+}
+
+.balance-modal-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.balance-modal-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.balance-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.balance-option {
+    display: flex;
+    align-items: center;
+    background: #1C222B;
+    border-radius: 12px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    gap: 12px;
+}
+
+.balance-option:hover {
+    background: #2A323C;
+}
+
+.balance-option.selected {
+    border-color: #0098EA;
+    background: rgba(0, 152, 234, 0.1);
+}
+
+.balance-option-icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.balance-option-amount {
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    flex: 1;
+}
+
+.balance-confirm-btn {
+    width: 100%;
+    padding: 16px;
+    background: #0098EA;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.balance-confirm-btn:disabled {
+    background: #3A4147;
+    color: #787E82;
+    cursor: not-allowed;
+}
+
+.balance-confirm-btn:hover:not(:disabled) {
+    background: #0082CC;
+    transform: translateY(-1px);
+}
+
+
+
+/* Admin Panel Styles */
+
+.admin-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.admin-panel.active {
+    display: flex;
+}
+
+.admin-content {
+    background: #262E38;
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 400px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.admin-title {
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: 400;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.admin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-label {
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+}
+
+.form-input {
+    background: #1C222B;
+    border: 1px solid #3A4147;
+    border-radius: 8px;
+    padding: 12px;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #0098EA;
+}
+
+.form-input[type="file"] {
+    cursor: pointer;
+}
+
+.form-input select {
+    background: #1C222B;
+    color: #FFFFFF;
+}
+
+.form-input option {
+    background: #1C222B;
+    color: #FFFFFF;
+}
+
+textarea.form-input {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.admin-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.admin-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.admin-btn-primary {
+    background: #0098EA;
+    color: #FFFFFF;
+}
+
+.admin-btn-secondary {
+    background: #3A4147;
+    color: #FFFFFF;
+}
+
+.admin-btn-danger {
+    background: #FF4757;
+    color: #FFFFFF;
+}
+
+.admin-btn:hover {
+    transform: translateY(-1px);
+}
+
+.products-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.product-item {
+    background: #1C222B;
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.product-info {
+    color: #FFFFFF;
+    font-size: 14px;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+}
+
+.product-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.edit-btn {
+    background: #0098EA;
+    color: #FFFFFF;
+}
+
+.delete-btn {
+    background: #FF4757;
+    color: #FFFFFF;
+}
+
+/* Scrollbar hide */
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* Product Modal Styles */
+.product-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1002;
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.product-modal.active {
+    display: flex;
+}
+
+.product-modal-content {
+    background: #262E38;
+    border-radius: 16px 16px 0 0;
+    padding: 0;
+    width: 100vw;
+    height: 60vh;
+    max-width: none;
+    max-height: 60vh;
+    overflow-y: auto;
+    position: relative;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-out;
+}
+
+.product-modal.active .product-modal-content {
+    transform: translateY(0);
+}
+
+.product-modal-close {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    background: rgba(120, 126, 130, 0.5);
+    backdrop-filter: blur(4px);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    color: #FFFFFF;
+    transition: all 0.3s ease;
+}
+
+.product-modal-close:hover {
+    background: rgba(120, 126, 130, 0.7);
+}
+
+.product-modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.product-modal-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+}
+
+.product-modal-gift {
+    width: 100%;
+    height: 120px;
+    background: url(../img/bg-gifts.svg), var(--gift-bg);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: 125%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px 16px 0 0;
+    flex-shrink: 0;
+}
+
+.product-modal-animation {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-modal-content-top {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px 16px 0;
+}
+
+.product-modal-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #FFFFFF;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    text-align: center;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.product-modal-description {
+    font-size: 12px;
+    color: #FFFFFF;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    text-align: center;
+    margin: 0;
+}
+
+.product-modal-info {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.product-info-table {
+    background: transparent;
+    border: 1px solid #3A4147;
+    border-radius: 12px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.product-table tr {
+    border-bottom: 1px solid #3A4147;
+}
+
+.product-table tr:last-child {
+    border-bottom: none;
+}
+
+.product-table-label {
+    padding: 12px;
+    background: #1C222B;
+    border-right: 1px solid #3A4147;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    width: 40%;
+}
+
+.product-table-value {
+    padding: 12px;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    width: 60%;
+}
+
+.product-price-display {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.buy-stars-btn {
+    background: #0098EA;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    cursor: pointer;
+    margin-left: 12px;
+}
+
+.product-modal-actions {
+    padding: 39px 16px 16px;
+    flex-shrink: 0;
+    border-top: 1px solid #3A4147;
+    background: #262E38;
+}
+
+.product-buy-btn {
+    width: 100%;
+    background: #0098EA;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.product-buy-btn:hover {
+    background: #0082CC;
+    transform: translateY(-1px);
+}
+
+.buy-btn-content {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Market Section Styles */
+.top-section {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 81px - 76px);
+    background: #1C222B;
+    padding: 0 17px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 300px;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.market-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    max-width: 300px;
+    margin-left: 30px;
+}
+
+.market-animation {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.market-title {
+    font-size: 25px;
+    font-weight: 400;
+    color: #FFFFFF;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    margin-bottom: 12px;
+    margin-top: 0;
+}
+
+.market-description {
+    font-size: 14px;
+    font-weight: 400;
+    color: #6f6f6f;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Stars explosion effect */
+.stars-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.star {
+    position: absolute;
+    pointer-events: none;
+    will-change: transform, opacity;
+    display: block;
+}
+
+.star svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    fill: rgba(255, 215, 0, 0.32);
+}
+
+.market-content {
+    position: relative;
+    z-index: 10;
+}
+
+/* Admin Section Styles */
+.admin-section {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 81px - 76px);
+    background: #1C222B;
+    padding: 21px;
+    padding-top: 110px;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+/* Admin upgrades screen styles */
+.admin-upgrades-screen {
+    width: 100%;
+}
+
+.upgrade-form {
+    background: #1C222B;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.upgrade-form-section {
+    margin-bottom: 20px;
+    padding: 16px;
+    background: #262E38;
+    border-radius: 8px;
+}
+
+.upgrade-form-section-title {
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+}
+
+.upgrade-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.upgrade-file-input {
+    grid-column: 1 / -1;
+}
+
+.upgrades-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.upgrade-item {
+    background: #1C222B;
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.upgrade-item-info {
+    flex: 1;
+    color: #FFFFFF;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+}
+
+.upgrade-item-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.upgrade-item-details {
+    font-size: 12px;
+    color: #787E82;
+    line-height: 1.4;
+}
+
+.upgrade-item-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.admin-content-page {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.admin-content-page .admin-title {
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: 400;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.admin-nav {
+    display: none !important;
+}
+
+/* Admin main screen styles */
+.admin-main-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+.admin-welcome {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.admin-welcome-title {
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: 400;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    margin: 0 0 8px 0;
+}
+
+.admin-welcome-text {
+    color: #CED1D6;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    margin: 0;
+}
+
+.admin-action-buttons {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    width: 100%;
+    max-width: 300px;
+}
+
+.admin-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #1C222B;
+    border: 1px solid #3A4147;
+    border-radius: 12px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #FFFFFF;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+}
+
+.admin-action-btn:hover {
+    background: #2A323C;
+    border-color: #0098EA;
+    transform: translateY(-1px);
+}
+
+.admin-action-icon {
+    font-size: 24px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0098EA;
+    border-radius: 8px;
+}
+
+.admin-action-text {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+/* Admin products screen styles */
+.admin-products-screen {
+    width: 100%;
+}
+
+.admin-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.admin-back-btn {
+    background: #1C222B;
+    border: 1px solid #3A4147;
+    border-radius: 8px;
+    padding: 8px;
+    cursor: pointer;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.admin-back-btn:hover {
+    background: #2A323C;
+    border-color: #0098EA;
+}
+
+.admin-screen-title {
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: 400;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    margin: 0;
+    flex: 1;
+}
+
+.products-actions {
+    margin-bottom: 20px;
+}
+
+.products-actions .admin-btn {
+    width: 100%;
+}
+
+/* Admin users screen styles */
+.admin-users-screen {
+    width: 100%;
+}
+
+.users-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.user-item {
+    background: #1C222B;
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.user-item-name {
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+}
+
+.user-item-details {
+    color: #787E82;
+    font-size: 12px;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+}
+
+.user-item-balance {
+    color: #009AF1;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+}
+
+.user-item-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.give-balance-btn {
+    background: #0098EA;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+}
+
+.give-balance-btn:hover {
+    background: #0082CC;
+}
+
+/* User balance modal styles */
+.user-balance-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1003;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.user-balance-modal-content {
+    background: #262E38;
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 400px;
+    width: 100%;
+    position: relative;
+}
+
+.user-balance-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.user-balance-modal-title {
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: 400;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    margin: 0;
+}
+
+.user-balance-modal-close {
+    background: transparent;
+    border: none;
+    color: #787E82;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.user-balance-modal-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.user-balance-modal-user-name {
+    color: #009AF1;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+}
+
+/* Gift transfer styles */
+.gift-transfer-form {
+    padding: 20px 0;
+}
+
+.gift-selection-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.gift-selection-card {
+    background: #262E38;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.gift-selection-card:hover {
+    border-color: #009AF1;
+    transform: translateY(-2px);
+}
+
+.gift-selection-card.selected {
+    border-color: #009AF1;
+    background: rgba(0, 154, 241, 0.1);
+}
+
+.gift-selection-animation {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gift-selection-name {
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 400;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    text-align: center;
+}
+
+.gift-selection-price {
+    color: #787E82;
+    font-size: 10px;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Gift transfer modal */
+.gift-transfer-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.gift-transfer-modal-content {
+    background: #1A1F28;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 400px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.gift-transfer-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #262E38;
+}
+
+.gift-transfer-modal-title {
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: 400;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    margin: 0;
+}
+
+.gift-transfer-modal-close {
+    background: transparent;
+    border: none;
+    color: #787E82;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.gift-transfer-modal-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.gift-transfer-modal-body {
+    padding: 20px;
+}
+
+.transfer-confirmation-info {
+    margin-bottom: 20px;
+}
+
+.transfer-gift-preview {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.transfer-details {
+    color: #FFFFFF;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+}
+
+.transfer-details p {
+    margin: 8px 0;
+    font-size: 14px;
+}
+
+.transfer-details strong {
+    color: #009AF1;
+}
+
+/* Inventory styles for gifts */
+.inventory-gifts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 0px;
+    padding: 0 8px;
+}
+
+.inventory-gift-card {
+    position: relative;
+    width: 100%;
+    background: #262E38;
+    border-radius: 24px;
+    padding: 16px;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.inventory-gift-card-content {
+    width: 100%;
+}
+
+.inventory-gift-animation-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+    margin-bottom: 8px;
+}
+
+.inventory-gift-animation-aspect-ratio {
+    height: 0;
+    width: 100%;
+    padding-top: 100%;
+}
+
+.inventory-gift-animation-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.inventory-gift-animation {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.inventory-gift-price-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.inventory-gift-price-chip {
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    width: fit-content;
+    border-radius: 24px;
+    gap: 8px;
+    height: 32px;
+    padding: 0 16px;
+    background: rgba(255, 187, 45, 0.2);
+}
+
+.inventory-gift-price-star-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.inventory-gift-price {
+    color: #ffc235;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    white-space: nowrap;
+}
+
+.inventory-gift-corner-ribbon {
+    height: 75px;
+    overflow: hidden;
+    position: absolute;
+    right: -5px;
+    text-align: right;
+    top: -5px;
+    width: 75px;
+    z-index: 10;
+}
+
+.inventory-gift-corner-ribbon span {
+    background: #0098EA;
+    color: #fff;
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 20px;
+    position: absolute;
+    right: -21px;
+    text-align: center;
+    text-text-transform: uppercase;
+    top: 19px;
+    transform: rotate(45deg);
+    width: 100px;
+}
+
+/* Gift Transfer Modal Styles */
+.gift-transfer-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.gift-transfer-modal.active {
+    display: flex;
+}
+
+.gift-transfer-modal-content {
+    background: #262E38;
+    border-radius: 20px;
+    padding: 0;
+    max-width: 350px;
+    width: 100%;
+    max-height: 80vh;
+    overflow: hidden;
+    position: relative;
+}
+
+.gift-transfer-modal-header {
+    position: relative;
+    padding: 16px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.gift-transfer-modal-close {
+    background: rgba(120, 126, 130, 0.3);
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #FFFFFF;
+    transition: all 0.3s ease;
+}
+
+.gift-transfer-modal-close:hover {
+    background: rgba(120, 126, 130, 0.5);
+}
+
+.gift-transfer-modal-body {
+    padding: 0 24px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.gift-transfer-animation-container {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, #0098EA 0%, #0082CC 100%);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+.gift-transfer-animation {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gift-transfer-title {
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    text-align: center;
+    margin: 0;
+}
+
+.gift-transfer-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.gift-transfer-label {
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    margin-bottom: 8px;
+}
+
+.gift-transfer-input {
+    background: #1C222B;
+    border: 1px solid #3A4147;
+    border-radius: 12px;
+    padding: 16px;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.gift-transfer-input:focus {
+    outline: none;
+    border-color: #0098EA;
+}
+
+.gift-transfer-input::placeholder {
+    color: #787E82;
+}
+
+.gift-transfer-send-btn {
+    background: #0098EA;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.gift-transfer-send-btn:hover {
+    background: #0082CC;
+    transform: translateY(-1px);
+}
+
+.gift-transfer-send-btn:disabled {
+    background: #3A4147;
+    color: #787E82;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Inventory Gift Modal Styles */
+.inventory-gift-modal {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60vh;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 24px 24px 0 0;
+    display: none;
+    flex-direction: column;
+    z-index: 1100;
+    touch-action: manipulation;
+    background: #282727;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-out;
+}
+
+.inventory-gift-modal.active {
+    display: flex;
+    transform: translateY(0);
+}
+
+.inventory-gift-modal-content {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.inventory-gift-modal-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 20;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+}
+
+.inventory-gift-modal-close {
+    cursor: pointer;
+    color: #FFFFFF;
+    transition: opacity 0.3s ease;
+    z-index: 20;
+}
+
+.inventory-gift-modal-close:hover {
+    opacity: 0.7;
+}
+
+.inventory-gift-modal-body {
+    position: relative;
+    z-index: 15;
+    height: 100%;
+    overflow-y: auto;
+    touch-action: manipulation;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 16px;
+    padding-top: 80px;
+    padding-bottom: 0;
+}
+
+.inventory-gift-display {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    margin-bottom: 16px;
+    margin-top: -60px;
+    border-radius: 24px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.inventory-gift-background {
+    position: absolute;
+    top: -30px;
+    left: 0;
+    width: 100%;
+    height: calc(100% + 60px);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 1;
+    display: none;
+}
+
+.inventory-gift-animation-large {
+    position: relative;
+    z-index: 2;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.inventory-gift-image-container {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    width: 260px;
+    height: 260px;
+    display: none;
+}
+
+.inventory-gift-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.inventory-gift-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+.inventory-gift-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.inventory-gift-info-overlay {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    background: linear-gradient(360deg, rgba(58, 58, 58, 0.44) 0%, rgba(58, 58, 58, 0) 100%);
+}
+
+.inventory-gift-name-wrapper {
+    font-size: 24px;
+    text-align: center;
+    line-height: 1.2;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #FFFFFF;
+    margin-bottom: 4px;
+}
+
+.inventory-gift-arrow {
+    transform: rotate(90deg);
+    width: 12px;
+    height: 12px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.inventory-gift-id {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.inventory-gift-actions {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+.inventory-gift-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    background: #3A3A3A;
+    color: #FFFFFF;
+    padding: 7px 16px;
+    font-weight: 600;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 13px;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+}
+
+.inventory-gift-action-btn:hover {
+    background: rgba(58, 58, 58, 0.8);
+}
+
+.inventory-gift-action-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.inventory-gift-details {
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #454545;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.inventory-gift-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.inventory-gift-table tr {
+    border-bottom: 1px solid #454545;
+    font-weight: 600;
+    font-size: 14px;
+    display: table-row;
+    visibility: visible;
+}
+
+.inventory-gift-table tr:last-child {
+    border-bottom: none;
+}
+
+.inventory-gift-table tbody {
+    display: table-row-group;
+}
+
+.inventory-gift-table-label {
+    padding: 12px 8px;
+    background: #3A3A3A;
+    color: #6D6D71;
+    text-transform: capitalize;
+    width: 30%;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+}
+
+.inventory-gift-table-value {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 8px;
+    background: transparent;
+    color: #FFFFFF;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+}
+
+.inventory-gift-model {
+    color: #1689ff;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.inventory-gift-percentage {
+    padding: 2px 6px;
+    font-size: 10px;
+    line-height: 1;
+    font-weight: 500;
+    color: #1689ff;
+    background: rgba(22, 137, 255, 0.15);
+    border-radius: 8px;
+}
+
+.inventory-gift-ton-value {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+}
+
+.inventory-gift-ton-value svg {
+    width: 13px;
+    height: 12px;
+}
+
+.inventory-gift-floor-price {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.floor-price-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.inventory-gift-purchase-info {
+    margin-bottom: 20px;
+}
+
+.inventory-gift-purchase-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+}
+
+.inventory-gift-purchase-row:last-child {
+    margin-bottom: 0;
+}
+
+.inventory-gift-purchase-label {
+    color: #6D6D71;
+}
+
+.inventory-gift-purchase-value {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    color: #F1AA05;
+    font-weight: 600;
+}
+
+.purchase-reward-icon {
+    width: 12px;
+    height: 12px;
+}
+
+.inventory-gift-cashback-label {
+    cursor: pointer;
+    color: #6D6D71;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.cashback-info-icon {
+    width: 12px;
+    height: 12px;
+}
+
+.inventory-gift-cashback-value {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    color: #5ac8fa;
+}
+
+.cashback-ton-icon {
+    width: 12px;
+    height: 12px;
+}
+
+.inventory-gift-bottom-actions {
+    width: 100%;
+    display: flex;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.inventory-gift-offer-btn,
+.inventory-gift-buy-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    font-weight: 600;
+    font-size: 17px;
+    border-radius: 4px;
+    flex: 1;
+    padding: 14px 8px;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+}
+
+.inventory-gift-offer-btn {
+    background: #3A3A3A;
+    color: #FFFFFF;
+}
+
+.inventory-gift-offer-btn:hover {
+    background: rgba(58, 58, 58, 0.8);
+}
+
+.inventory-gift-buy-btn {
+    background: #1689ff;
+    color: #FFFFFF;
+    flex-direction: column;
+    gap: 0;
+}
+
+.inventory-gift-buy-btn:hover {
+    background: rgba(22, 137, 255, 0.9);
+}
+
+.inventory-gift-buy-price {
+    opacity: 0.7;
+    font-weight: 400;
+    font-size: 13px;
+}
+
+/* Custom buttons for inventory gift modal */
+.inventory-gift-custom-actions {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    margin-top: auto;
+    padding: 16px;
+    background: #282727;
+    border-top: 1px solid #454545;
+    margin-bottom: 0;
+}
+
+.inventory-gift-custom-actions .inventory-gift-custom-btn {
+    flex: 1;
+}
+
+.inventory-gift-custom-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #3A3A3A;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.inventory-gift-custom-btn:hover {
+    background: rgba(58, 58, 58, 0.8);
+    transform: translateY(-1px);
+}
+
+.inventory-gift-custom-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.inventory-gift-upgrade-btn {
+    background: #4d4d4d !important;
+    color: #FFFFFF;
+}
+
+.inventory-gift-upgrade-btn:hover {
+    background: #949494 !important;
+    transform: translateY(-1px);
+}
+
+.inventory-gift-send-btn {
+    background: #0098EA !important;
+    color: #FFFFFF;
+}
+
+.inventory-gift-send-btn:hover {
+    background: #0082CC !important;
+    transform: translateY(-1px);
+}

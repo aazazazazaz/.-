@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>XCase</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@600&display=swap" rel="stylesheet">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Загрузка...</div>
+        </div>
+    </div>
+
+    <div class="app-container" style="display: none;" id="app-container">
+        <!-- Header -->
+        <header class="main-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="balance-container">
+                        <div class="balance-icon">
+                            <div class="balance-tgs-animation" id="header-balance-icon"></div>
+                            <span class="balance-amount">0,00</span>
+                        </div>
+                        <button class="add-balance-btn">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 0C7.32747 1.43131e-08 7.59269 0.266213 7.59269 0.593657V6.40685H13.4073C13.7348 6.40685 14 6.67306 14 7.00051C13.9998 7.32779 13.7347 7.59315 13.4073 7.59315H7.59269V13.4074C7.59251 13.7346 7.32736 14 7 14C6.67265 14 6.4075 13.7346 6.40731 13.4074V7.59315H0.592689C0.265339 7.59315 0.000192164 7.32779 0 7.00051C0 6.67306 0.265221 6.40685 0.592689 6.40685H6.40731V0.593657C6.40731 0.266215 6.67254 4.25285e-06 7 0Z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <img class="user-avatar" src="https://via.placeholder.com/36x36/262E38/FFFFFF?text=U" alt="Аватар пользователя">
+                </div>
+
+            </div>
+        </header>
+
+        <main class="content">
+            <!-- Inventory Section -->
+            <div class="section inventory-section active" data-section="inventory">
+                <h1 class="inventory-title">Инвентарь</h1>
+                <div class="tgs-animation" id="tgs-container"></div>
+                <div class="no-gifts-text">Подарков пока нету!</div>
+                <div class="send-gift-text"> <a href="https://t.me/XCase_relayer" class="username-link"></a></div>
+                <button class="action-button cases-button" data-action="case">
+                    Глaвная
+                    <img src="case.svg" alt="Главная" class="button-icon">
+                </button>
+                <button class="action-button profile-button" data-action="profile">
+                    Профиль
+                    <img src="profile.svg" alt="Профиль" class="button-icon">
+                </button>
+            </div>
+
+            <!-- Profile Section -->
+            <div class="section profile-section" data-section="profile" style="display: none;">
+                <div class="profile-header">
+                    <div class="profile-title">Реферал</div>
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                        <button class="info-button" id="admin-button">
+                            <div class="info-icon">
+                                <svg width="4" height="13" viewBox="0 0 4 13" fill="#262E38" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3.888 4.41434L0.223927 4.82461L0.0927253 5.36783L0.812739 5.48647C1.28315 5.58654 1.37595 5.73807 1.27355 6.15692L0.0927253 11.1145C-0.217681 12.3967 0.260729 13 1.38555 13C2.25757 13 3.27039 12.6398 3.7296 12.1452L3.8704 11.5505C3.55039 11.8021 3.08318 11.9021 2.77278 11.9021C2.33277 11.9021 2.17276 11.6262 2.28637 11.1402L3.888 4.41434ZM4 1.42951C4 1.80864 3.83143 2.17225 3.53136 2.44033C3.2313 2.70842 2.82432 2.85903 2.39997 2.85903C1.97561 2.85903 1.56864 2.70842 1.26858 2.44033C0.968513 2.17225 0.799939 1.80864 0.799939 1.42951C0.799939 1.05038 0.968513 0.686781 1.26858 0.418695C1.56864 0.150609 1.97561 0 2.39997 0C2.82432 0 3.2313 0.150609 3.53136 0.418695C3.83143 0.686781 4 1.05038 4 1.42951Z"></path>
+                                </svg>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="profile-user-info">
+                    <div class="user-info-container">
+                        <div class="user-avatar-container">
+                            <img class="profile-avatar" src="https://via.placeholder.com/72x72/262E38/FFFFFF?text=U" alt="Аватар пользователя">
+                            <div class="user-rank">#1337</div>
+                        </div>
+                        <span class="user-name">Без имени</span>
+                        <button class="user-id-btn">
+                            ID 
+                            <svg width="13" height="7" viewBox="0 0 13 7" fill="#0098EA" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M6.5 0C10.0897 0 13 3.50041 13 3.50041C12.9779 3.52689 10.076 7 6.5 7C2.92396 7 0.0220757 3.52689 0 3.50041C0 3.50041 2.91027 0 6.5 0ZM6.5 1.06901C5.07513 1.06901 3.92047 2.1578 3.92047 3.50041C3.9207 4.84282 5.07527 5.93099 6.5 5.93099C7.92473 5.93099 9.08016 4.84282 9.08039 3.50041C9.08039 2.1578 7.92487 1.06901 6.5 1.06901Z"></path>
+                                <ellipse cx="6.49993" cy="3.50003" rx="1.92217" ry="1.81119"></ellipse>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="balance-card">
+                    <div class="balance-info">
+                        <div class="profile-balance-tgs-animation" id="profile-balance-icon"></div>
+                        <span class="balance-value">0.00</span>
+                    </div>
+                    <button class="get-balance-btn">Вывести</button>
+                </div>
+
+                <div class="referrals-card">
+                    <span class="referrals-label">Рефералы</span>
+                    <span class="referrals-count">0</span>
+                </div>
+
+                <p class="referral-description">Приглашайте рефералов, увеличивайте свой доход и получайте эксклюзивные бонусы за активное участие</p>
+
+                <div class="referral-link-section">
+                    <p class="referral-link-title">Реферальная ссылка</p>
+                    <div class="referral-link-container">
+                        <button class="referral-link-input">
+                            <span class="referral-link-text">t.me/onecase_play/app?startapp=undefined</span>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#CED1D6" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7818 4C14.2868 4 14.7712 4.21071 15.1283 4.58579C15.4854 4.96086 15.686 5.46957 15.686 6L15.686 14C15.686 14.5304 15.4854 15.0391 15.1283 15.4142C14.7712 15.7893 14.2868 16 13.7818 16L6.16476 16C5.65972 16 5.17536 15.7893 4.81825 15.4142C4.46113 15.0391 4.2605 14.5304 4.2605 14L4.2605 6C4.2605 5.46957 4.46113 4.96086 4.81825 4.58579C5.17536 4.21071 5.65972 4 6.16476 4L13.7818 4ZM14.7339 6C14.7339 5.73478 14.6336 5.48043 14.455 5.29289C14.2765 5.10536 14.0343 5 13.7818 5L6.16476 5C5.91224 5 5.67006 5.10536 5.4915 5.29289C5.31294 5.48043 5.21263 5.73478 5.21263 6L5.21263 14C5.21263 14.2652 5.31294 14.5196 5.4915 14.7071C5.67006 14.8946 5.91224 15 6.16476 15L13.7818 15C14.0343 15 14.2765 14.8946 14.455 14.7071C14.6336 14.5196 14.7339 14.2652 14.7339 14L14.7339 6ZM10.9254 2C10.9254 1.73478 10.8251 1.48043 10.6465 1.29289C10.468 1.10536 10.2258 1 9.97327 1L2.35625 0.999999C2.10373 0.999999 1.86155 1.10536 1.68299 1.29289C1.50443 1.48043 1.40412 1.73478 1.40412 2L1.40412 10C1.40412 10.2652 1.50443 10.5196 1.68299 10.7071C1.86155 10.8946 2.10373 11 2.35625 11L3.30838 11L3.30838 11.0479C3.30838 11.5737 2.88209 12 2.35625 12C1.85121 12 1.36685 11.7893 1.00974 11.4142C0.652619 11.0391 0.451993 10.5304 0.451993 10L0.451993 2C0.451993 1.46957 0.652619 0.960858 1.00974 0.585786C1.36685 0.210713 1.85121 -6.35145e-07 2.35625 -6.11959e-07L9.97327 -2.62268e-07C10.4783 -2.39082e-07 10.9627 0.210713 11.3198 0.585786C11.6769 0.960859 11.8775 1.46957 11.8775 2L11.8775 2.04787C11.8775 2.57372 11.4512 3 10.9254 3L10.9254 2Z"></path>
+                                <path d="M14.7339 6C14.7339 5.73478 14.6336 5.48043 14.455 5.29289C14.2765 5.10536 14.0343 5 13.7818 5L6.16476 5C5.91224 5 5.67006 5.10536 5.4915 5.29289C5.31294 5.48043 5.21263 5.73478 5.21263 6L5.21263 14C5.21263 14.2652 5.31294 14.5196 5.4915 14.7071C5.67006 14.8946 5.91224 15 6.16476 15L13.7818 15C14.0343 15 14.2765 14.8946 14.455 14.7071C14.6336 14.5196 14.7339 14.2652 14.7339 14L14.7339 6Z"></path>
+                                <path d="M10.9254 2C10.9254 1.73478 10.8251 1.48043 10.6465 1.29289C10.468 1.10536 10.2258 1 9.97327 1L2.35625 0.999999C2.10373 0.999999 1.86155 1.10536 1.68299 1.29289C1.50443 1.48043 1.40412 1.73478 1.40412 2L1.40412 10C1.40412 10.2652 1.50443 10.5196 1.68299 10.7071C1.86155 10.8946 2.10373 11 2.35625 11L3.30838 11L3.30838 5C3.30838 3.89543 4.20381 3 5.30838 3L10.9254 3L10.9254 2Z"></path>
+                            </svg>
+                        </button>
+                        <button class="share-btn">
+                            <svg width="16" height="16" viewBox="0 0 17 16" fill="#CED1D6" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15.4215 11.4533C14.9148 11.0933 14.2881 10.9467 13.6747 11.0267C13.0613 11.1067 12.5012 11.4133 12.0878 11.88L5.36716 8.76009C5.52718 8.26678 5.52718 7.7468 5.36716 7.25348L12.0878 4.1336C12.4745 4.57358 12.9946 4.88024 13.5813 4.97357C14.1547 5.0669 14.7548 4.96024 15.2615 4.66691C15.7682 4.37359 16.1549 3.90694 16.3549 3.34696C16.555 2.80032 16.5416 2.18701 16.3549 1.64036C16.1549 1.09372 15.7549 0.627069 15.2482 0.333747C14.7414 0.0404252 14.1414 -0.0662374 13.568 0.0404252C12.9946 0.147088 12.4745 0.44041 12.0878 0.893726C11.7145 1.34704 11.5011 1.90702 11.5011 2.49366C11.5011 2.74699 11.5411 3.00031 11.6211 3.2403L4.90045 6.36018C4.56708 5.97353 4.12703 5.69354 3.63365 5.57355C3.14027 5.44022 2.62022 5.46688 2.14017 5.65354C1.66012 5.82687 1.24674 6.14686 0.953379 6.57351C0.660016 7.00016 0.5 7.49347 0.5 8.00012C0.5 8.50677 0.660016 9.01341 0.953379 9.42673C1.24674 9.84005 1.66012 10.16 2.14017 10.3467C2.62022 10.52 3.14027 10.5467 3.63365 10.4267C4.12703 10.2934 4.56708 10.0267 4.90045 9.64006L11.6211 12.7599C11.4344 13.3466 11.4744 13.9866 11.7278 14.5465C11.9812 15.1065 12.4479 15.5598 13.0079 15.7998C13.5813 16.0398 14.2214 16.0665 14.8081 15.8665C15.3948 15.6665 15.8882 15.2532 16.1816 14.7199C16.4883 14.1732 16.5683 13.5466 16.435 12.9466C16.3016 12.3466 15.9416 11.8133 15.4348 11.4533H15.4215Z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section case-section" data-section="case" style="display: none;">
+                <div class="cases-grid" id="cases-grid">
+                    <!-- Product cards will be dynamically generated here -->
+                </div>
+            </div>
+
+            <div class="section top-section" data-section="top" style="display: none;">
+                <div class="stars-container" id="stars-stage"></div>
+                <div class="market-content">
+                    <div class="market-animation" id="market-tgs-container"></div>
+                    <h2 class="market-title">Скоро откроем</h2>
+                    <p class="market-description">Маркет находится в разработке</p>
+                </div>
+            </div>
+
+            <!-- Admin Section -->
+            <div class="section admin-section" data-section="admin" style="display: none;">
+                <div class="admin-content-page">
+                    <h1 class="admin-title">Админ панель</h1>
+                    
+                    <!-- Empty state for non-admin users -->
+                    <div class="admin-empty-state" id="admin-empty-state" style="display: none;">
+                        <p style="color: #787E82; text-align: center; margin-top: 40px;">Доступ запрещен</p>
+                    </div>
+
+                    <!-- Main admin screen -->
+                    <div class="admin-main-screen" id="admin-main-screen">
+                        <div class="admin-welcome">
+                            <h2 class="admin-welcome-title">Добро пожаловать в админ панель</h2>
+                            <p class="admin-welcome-text">Выберите действие:</p>
+                        </div>
+
+                        <div class="admin-action-buttons">
+                            <button class="admin-action-btn" id="manage-products-btn">
+                                <div class="admin-action-icon">📦</div>
+                                <span class="admin-action-text">Товары</span>
+                            </button>
+                            <button class="admin-action-btn" id="manage-users-btn">
+                                <div class="admin-action-icon">👥</div>
+                                <span class="admin-action-text">Пользователи</span>
+                            </button>
+                            <button class="admin-action-btn" id="manage-stats-btn">
+                                <div class="admin-action-icon">📊</div>
+                                <span class="admin-action-text">Статистика</span>
+                            </button>
+                            <button class="admin-action-btn" id="manage-gifts-btn">
+                                <div class="admin-action-icon">🎁</div>
+                                <span class="admin-action-text">Передать подарок</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Users management screen -->
+                    <div class="admin-users-screen" id="admin-users-screen" style="display: none;">
+                        <div class="admin-header">
+                            <button class="admin-back-btn" id="admin-users-back-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <h2 class="admin-screen-title">Управление пользователями</h2>
+                        </div>
+
+                        <div class="users-list" id="users-list">
+                            <!-- Users will be listed here -->
+                        </div>
+
+                        <!-- Balance modal for users -->
+                        <div class="user-balance-modal" id="user-balance-modal" style="display: none;">
+                            <div class="user-balance-modal-content">
+                                <div class="user-balance-modal-header">
+                                    <h3 class="user-balance-modal-title">Выдать баланс пользователю</h3>
+                                    <button class="user-balance-modal-close" id="user-balance-modal-close">×</button>
+                                </div>
+                                <div class="user-balance-modal-body">
+                                    <div class="form-group">
+                                        <label class="form-label">Пользователь:</label>
+                                        <span class="user-balance-modal-user-name" id="user-balance-modal-user-name"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Количество звезд:</label>
+                                        <input type="number" class="form-input" id="user-balance-amount" placeholder="Введите количество звезд" min="1">
+                                    </div>
+                                    <div class="admin-buttons">
+                                        <button class="admin-btn admin-btn-primary" id="give-balance-btn">Выдать</button>
+                                        <button class="admin-btn admin-btn-secondary" id="cancel-balance-btn">Отмена</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gift transfer screen -->
+                    <div class="admin-gifts-screen" id="admin-gifts-screen" style="display: none;">
+                        <div class="admin-header">
+                            <button class="admin-back-btn" id="admin-gifts-back-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <h2 class="admin-screen-title">Передать подарок пользователю</h2>
+                        </div>
+
+                        <div class="gift-transfer-form">
+                            <div class="form-group">
+                                <label class="form-label">ID пользователя</label>
+                                <input type="text" class="form-input" id="gift-user-id" placeholder="Введите ID пользователя">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Выберите подарок</label>
+                                <div class="gift-selection-grid" id="gift-selection-grid">
+                                    <!-- Gift selection cards will be generated here -->
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Комментарий (необязательно)</label>
+                                <textarea class="form-input" id="gift-comment" placeholder="Добавьте комментарий к передаче подарка" rows="3"></textarea>
+                            </div>
+
+                            <div class="admin-buttons">
+                                <button class="admin-btn admin-btn-primary" id="transfer-gift-btn" disabled>Передать подарок</button>
+                                <button class="admin-btn admin-btn-secondary" id="cancel-gift-transfer-btn">Отмена</button>
+                            </div>
+                        </div>
+
+                        <!-- Gift transfer confirmation modal -->
+                        <div class="gift-transfer-modal" id="gift-transfer-modal" style="display: none;">
+                            <div class="gift-transfer-modal-content">
+                                <div class="gift-transfer-modal-header">
+                                    <h3 class="gift-transfer-modal-title">Подтверждение передачи</h3>
+                                    <button class="gift-transfer-modal-close" id="gift-transfer-modal-close">×</button>
+                                </div>
+                                <div class="gift-transfer-modal-body">
+                                    <div class="transfer-confirmation-info">
+                                        <div class="transfer-gift-preview" id="transfer-gift-preview">
+                                            <!-- Selected gift preview -->
+                                        </div>
+                                        <div class="transfer-details">
+                                            <p><strong>Подарок:</strong> <span id="confirm-gift-name"></span></p>
+                                            <p><strong>Получатель:</strong> <span id="confirm-user-id"></span></p>
+                                            <p><strong>Комментарий:</strong> <span id="confirm-comment">Без комментария</span></p>
+                                        </div>
+                                    </div>
+                                    <div class="admin-buttons">
+                                        <button class="admin-btn admin-btn-primary" id="confirm-transfer-btn">Подтвердить передачу</button>
+                                        <button class="admin-btn admin-btn-secondary" id="cancel-confirm-transfer-btn">Отмена</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Upgrades management screen -->
+                    <div class="admin-upgrades-screen" id="admin-upgrades-screen" style="display: none;">
+                        <div class="admin-header">
+                            <button class="admin-back-btn" id="admin-upgrades-back-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <h2 class="admin-screen-title">Управление улучшениями</h2>
+                        </div>
+
+                        <!-- Add/Edit upgrade form -->
+                        <div class="admin-form" id="admin-upgrade-form" style="display: none;">
+                            <div class="form-group">
+                                <label class="form-label">Выберите подарок для улучшения</label>
+                                <select class="form-input" id="upgrade-gift-select">
+                                    <option value="">Выберите подарок</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Фон подарка за TGS анимацией (изображение/TGS)</label>
+                                <input type="file" class="form-input" id="upgrade-background-image" accept="image/*,.tgs">
+                            </div>
+
+                            <div class="upgrade-form-section">
+                                <div class="upgrade-form-section-title">Модель</div>
+                                <div class="upgrade-form-row">
+                                    <div class="form-group">
+                                        <label class="form-label">Название модели</label>
+                                        <input type="text" class="form-input" id="upgrade-model-name" placeholder="Название модели">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Процент модели</label>
+                                        <input type="text" class="form-input" id="upgrade-model-percent" placeholder="2.7%">
+                                    </div>
+                                </div>
+                                <div class="form-group upgrade-file-input">
+                                    <label class="form-label">Изображение/анимация модели</label>
+                                    <input type="file" class="form-input" id="upgrade-model-file" accept="image/*,.tgs">
+                                </div>
+                            </div>
+
+                            <div class="upgrade-form-section">
+                                <div class="upgrade-form-section-title">Фон</div>
+                                <div class="upgrade-form-row">
+                                    <div class="form-group">
+                                        <label class="form-label">Название фона</label>
+                                        <input type="text" class="form-input" id="upgrade-background-name" placeholder="Название фона">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Процент фона</label>
+                                        <input type="text" class="form-input" id="upgrade-background-percent" placeholder="1.5%">
+                                    </div>
+                                </div>
+                                <div class="form-group upgrade-file-input">
+                                    <label class="form-label">Изображение/анимация фона</label>
+                                    <input type="file" class="form-input" id="upgrade-background-file" accept="image/*,.tgs">
+                                </div>
+                            </div>
+
+                            <div class="upgrade-form-section">
+                                <div class="upgrade-form-section-title">Символ</div>
+                                <div class="upgrade-form-row">
+                                    <div class="form-group">
+                                        <label class="form-label">Название символа</label>
+                                        <input type="text" class="form-input" id="upgrade-symbol-name" placeholder="Название символа">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Процент символа</label>
+                                        <input type="text" class="form-input" id="upgrade-symbol-percent" placeholder="1.2%">
+                                    </div>
+                                </div>
+                                <div class="form-group upgrade-file-input">
+                                    <label class="form-label">Изображение/анимация символа</label>
+                                    <input type="file" class="form-input" id="upgrade-symbol-file" accept="image/*,.tgs">
+                                </div>
+                            </div>
+
+                            <div class="admin-buttons">
+                                <button class="admin-btn admin-btn-primary" id="save-upgrade">Сохранить улучшение</button>
+                                <button class="admin-btn admin-btn-secondary" id="cancel-upgrade-form">Отмена</button>
+                            </div>
+                        </div>
+
+                        <!-- Upgrades list actions -->
+                        <div class="products-actions" id="upgrades-actions">
+                            <button class="admin-btn admin-btn-primary" id="add-upgrade-btn">Добавить улучшение</button>
+                        </div>
+
+                        <div class="upgrades-list" id="upgrades-list">
+                            <!-- Existing upgrades will be listed here -->
+                        </div>
+                    </div>
+
+                    <!-- Products management screen -->
+                    <div class="admin-products-screen" id="admin-products-screen" style="display: none;">
+                        <div class="admin-header">
+                            <button class="admin-back-btn" id="admin-back-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <h2 class="admin-screen-title">Управление товарами</h2>
+                        </div>
+
+                        <!-- Add/Edit product form -->
+                        <div class="admin-form" id="admin-product-form" style="display: none;">
+                            <div class="form-group">
+                                <label class="form-label">Название товара</label>
+                                <input type="text" class="form-input" id="product-name" placeholder="Введите название">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Цена</label>
+                                <input type="number" class="form-input" id="product-price" placeholder="Введите цену">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Наличие</label>
+                                <input type="text" class="form-input" id="product-availability" placeholder="Например: 1500 из 5000">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Статус</label>
+                                <select class="form-input" id="product-status">
+                                    <option value="Неуникальный">Неуникальный</option>
+                                    <option value="Уникальный">Уникальный</option>
+                                    <option value="Редкий">Редкий</option>
+                                    <option value="Эпический">Эпический</option>
+                                    <option value="Легендарный">Легендарный</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Тип</label>
+                                <select class="form-input" id="product-type">
+                                    <option value="Подарок">Подарок</option>
+                                    <option value="NFT">NFT</option>
+                                    <option value="Коллекционный">Коллекционный</option>
+                                    <option value="Особый">Особый</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Описание товара</label>
+                                <textarea class="form-input" id="product-description" placeholder="Введите описание товара" rows="3"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">TGS анимация (файл)</label>
+                                <input type="file" class="form-input" id="product-animation" accept=".tgs">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Фон товара (изображение)</label>
+                                <input type="file" class="form-input" id="product-background" accept="image/*">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Текст ленточки</label>
+                                <input type="text" class="form-input" id="product-ribbon-text" placeholder="new" maxlength="10">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Цвет ленточки</label>
+                                <input type="color" class="form-input" id="product-ribbon-color" value="#0098EA">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Цвет границы товара</label>
+                                <input type="color" class="form-input" id="product-border-color" value="#0098EA">
+                            </div>
+
+                            <div class="admin-buttons">
+                                <button class="admin-btn admin-btn-primary" id="save-product">Сохранить</button>
+                                <button class="admin-btn admin-btn-secondary" id="cancel-product-form">Отмена</button>
+                            </div>
+                        </div>
+
+                        <!-- Products list actions -->
+
+    
+    <!-- Admin Password Modal -->
+    <div id="admin-password-modal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 10000; align-items: center; justify-content: center;">
+        <div class="modal-content" style="max-width: 400px; padding: 24px; background: #0F1419; border-radius: 16px; margin: 20px;">
+            <h2 style="color: #FFFFFF; font-size: 20px; margin-bottom: 20px; text-align: center; font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;">Вход в админ-панель</h2>
+            <input type="password" id="admin-password-input" placeholder="Введите пароль" 
+                   style="width: 100%; padding: 12px; background: #1C222B; border: 1px solid #3A4147; border-radius: 8px; color: #FFFFFF; font-size: 14px; margin-bottom: 16px; box-sizing: border-box; font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;">
+            <div style="display: flex; gap: 12px;">
+                <button onclick="hideAdminPasswordModal()" 
+                        style="flex: 1; padding: 12px; background: #3A4147; color: #FFFFFF; border: none; border-radius: 8px; cursor: pointer; font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif; font-size: 14px;">
+                    Отмена
+                </button>
+                <button onclick="verifyAdminPassword()" 
+                        style="flex: 1; padding: 12px; background: #0098EA; color: #FFFFFF; border: none; border-radius: 8px; cursor: pointer; font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif; font-size: 14px;">
+                    Войти
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+                        <div class="products-actions" id="products-actions">
+                            <button class="admin-btn admin-btn-primary" id="add-product-btn">Добавить товар</button>
+                        </div>
+
+                        <div class="products-list" id="products-list">
+                            <!-- Existing products will be listed here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="nav-item active" data-section="inventory">
+                <div class="nav-icon">
+                    <img src="inventory.svg" alt="Инвентарь">
+                </div>
+                <span class="nav-text">Инвентарь</span>
+            </div>
+
+            <div class="nav-item" data-section="profile">
+                <div class="nav-icon">
+                    <img src="profile.svg" alt="Профиль">
+                </div>
+                <span class="nav-text">Профиль</span>
+            </div>
+
+            <div class="nav-item" data-section="case">
+                <div class="nav-icon">
+                    <img src="case.svg" alt="Главная">
+                </div>
+                <span class="nav-text">Главная</span>
+            </div>
+
+            <div class="nav-item" data-section="top">
+                <div class="nav-icon">
+                    <img src="top.svg" alt="Маркет">
+                </div>
+                <span class="nav-text">Маркет</span>
+            </div>
+
+            <div class="nav-item admin-nav" data-section="admin" style="display: none;">
+                <div class="nav-icon">
+                    <img src="profile.svg" alt="Админ">
+                </div>
+                <span class="nav-text">Админ</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Balance Top-up Modal -->
+    <div class="balance-modal" id="balance-modal">
+        <div class="balance-modal-content">
+            <div class="balance-modal-header">
+                <img src="srr.svg" alt="Stars" class="balance-modal-icon">
+                <h2 class="balance-modal-title">                Выберите количество звезды для пополнения</h2>
+                <button class="balance-modal-close" id="balance-modal-close">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="#787E82" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1L13 13M1 13L13 1" stroke="#787E82" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="balance-options">
+                <div class="balance-option" data-amount="100">
+                    <img src="srr.svg" alt="Stars" class="balance-option-icon">
+                    <span class="balance-option-amount">100</span>
+                </div>
+                <div class="balance-option" data-amount="200">
+                    <img src="srr.svg" alt="Stars" class="balance-option-icon">
+                    <span class="balance-option-amount">200</span>
+                </div>
+                <div class="balance-option" data-amount="300">
+                    <img src="srr.svg" alt="Stars" class="balance-option-icon">
+                    <span class="balance-option-amount">300</span>
+                </div>
+            </div>
+
+            <button class="balance-confirm-btn" id="balance-confirm-btn" disabled>
+                Выберите количество звезды для пополнения
+            </button>
+        </div>
+    </div>
+
+
+
+    <!-- Product Modal -->
+    <div class="product-modal" id="product-modal">
+        <div class="product-modal-content">
+            <div class="product-modal-close" id="product-modal-close">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="m7 7l10 10M7 17L17 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <div class="product-modal-body">
+                <div class="product-modal-gift" id="product-modal-gift">
+                    <div class="product-modal-animation" id="product-modal-animation"></div>
+                </div>
+
+                <div class="product-modal-content-top">
+                    <h1 class="product-modal-title" id="product-modal-title">Product Name</h1>
+                    <p class="product-modal-description" id="product-modal-description">This gift will soon be available for upgrade, sale and mint as NFT</p>
+
+                    <div class="product-modal-info">
+                        <div class="product-info-table">
+                            <table class="product-table">
+                                <tbody>
+                                    <tr>
+                                        <td class="product-table-label">Стоимость</td>
+                                        <td class="product-table-value">
+                                            <div class="product-price-display">
+                                                <span id="product-modal-price">100</span>
+                                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <g clip-path="url(#clip0_1221_53)">
+                                                        <path d="M5.25204 4.48403L7.17622 0.507863C7.24984 0.354872 7.36389 0.226152 7.50539 0.136363C7.64689 0.0465752 7.81014 -0.000670824 7.97656 7.19629e-06C8.14297 0.000685217 8.30586 0.04926 8.44665 0.140198C8.58745 0.231137 8.7005 0.360783 8.77293 0.514369L10.5892 4.35002C10.6608 4.50382 10.7693 4.63653 10.9044 4.73573C11.0396 4.83493 11.1971 4.8974 11.3622 4.91729L15.1649 5.3922C15.3431 5.41631 15.5112 5.49121 15.65 5.60839C15.7888 5.72556 15.8927 5.88031 15.95 6.05503C16.0072 6.22975 16.0155 6.41743 15.9739 6.59674C15.9322 6.77605 15.8424 6.93978 15.7145 7.06932L12.7063 10.1477C12.6458 10.2092 12.5999 10.2841 12.5721 10.3667C12.5444 10.4493 12.5356 10.5373 12.5464 10.6239L13.0478 14.7783C13.0839 15.0618 13.0091 15.3485 12.8398 15.5756C12.6705 15.8028 12.4204 15.9521 12.1441 15.991C11.9282 16.0203 11.7089 15.9779 11.5183 15.87L8.34266 14.0679C8.2299 14.0032 8.10317 13.9684 7.97396 13.9666C7.84475 13.9648 7.71714 13.996 7.60269 14.0575L4.30898 15.8114C4.19854 15.8695 4.0779 15.9045 3.95413 15.9142C3.83035 15.924 3.70592 15.9084 3.5881 15.8683C3.47029 15.8282 3.36145 15.7644 3.26794 15.6807C3.17444 15.597 3.09816 15.495 3.04354 15.3808C2.95447 15.201 2.92167 14.9974 2.94962 14.7979L3.21108 12.8891C3.34054 11.9563 3.89648 11.1457 4.70245 10.7176L8.35789 8.78157C8.40449 8.75583 8.43953 8.71255 8.45563 8.66086C8.47173 8.60917 8.46763 8.55309 8.4442 8.50443C8.42603 8.46626 8.3967 8.43485 8.36031 8.41456C8.32391 8.39428 8.28225 8.38612 8.24112 8.39124L3.76828 9.0587C3.42938 9.10822 3.08411 9.08448 2.75469 8.98903C2.42527 8.89357 2.11898 8.7285 1.85552 8.50443L0.367962 7.24366C0.163022 7.06833 0.0329532 6.8179 0.00545299 6.54572C-0.0220472 6.27354 0.0551943 6.0011 0.220729 5.78643C0.381913 5.5816 0.613597 5.44795 0.868046 5.41301L4.68468 4.90559C4.80565 4.88818 4.92062 4.84066 5.01952 4.76717C5.11843 4.69368 5.19826 4.59646 5.25204 4.48403Z" fill="url(#paint0_linear_1221_53)"></path>
+                                                    </g>
+                                                    <defs>
+                                                        <linearGradient id="paint0_linear_1221_53" x1="0" y1="0" x2="16" y2="16" gradientUnits="userSpaceOnUse">
+                                                            <stop stop-color="#FDD21A"></stop>
+                                                            <stop offset="1" stop-color="#E47B03"></stop>
+                                                        </linearGradient>
+                                                        <clipPath id="clip0_1221_53">
+                                                            <rect width="16" height="16" fill="white"></rect>
+                                                        </clipPath>
+                                                    </defs>
+                                                </svg>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="product-table-label">Наличие</td>
+                                        <td class="product-table-value" id="product-modal-availability">1500 из 5000</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="product-table-label">Статус</td>
+                                        <td class="product-table-value" id="product-modal-status">Неуникальный</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="product-table-label">Тип</td>
+                                        <td class="product-table-value" id="product-modal-type">Подарок</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-modal-actions">
+                    <button class="product-buy-btn" id="product-buy-btn">
+                        <span class="buy-btn-content">
+                             Купить за
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_1221_53)">
+                                    <path d="M5.25204 4.48403L7.17622 0.507863C7.24984 0.354872 7.36389 0.226152 7.50539 0.136363C7.64689 0.0465752 7.81014 -0.000670824 7.97656 7.19629e-06C8.14297 0.000685217 8.30586 0.04926 8.44665 0.140198C8.58745 0.231137 8.7005 0.360783 8.77293 0.514369L10.5892 4.35002C10.6608 4.50382 10.7693 4.63653 10.9044 4.73573C11.0396 4.83493 11.1971 4.8974 11.3622 4.91729L15.1649 5.3922C15.3431 5.41631 15.5112 5.49121 15.65 5.60839C15.7888 5.72556 15.8927 5.88031 15.95 6.05503C16.0072 6.22975 16.0155 6.41743 15.9739 6.59674C15.9322 6.77605 15.8424 6.93978 15.7145 7.06932L12.7063 10.1477C12.6458 10.2092 12.5999 10.2841 12.5721 10.3667C12.5444 10.4493 12.5356 10.5373 12.5464 10.6239L13.0478 14.7783C13.0839 15.0618 13.0091 15.3485 12.8398 15.5756C12.6705 15.8028 12.4204 15.9521 12.1441 15.991C11.9282 16.0203 11.7089 15.9779 11.5183 15.87L8.34266 14.0679C8.2299 14.0032 8.10317 13.9684 7.97396 13.9666C7.84475 13.9648 7.71714 13.996 7.60269 14.0575L4.30898 15.8114C4.19854 15.8695 4.0779 15.9045 3.95413 15.9142C3.83035 15.924 3.70592 15.9084 3.5881 15.8683C3.47029 15.8282 3.36145 15.7644 3.26794 15.6807C3.17444 15.597 3.09816 15.495 3.04354 15.3808C2.95447 15.201 2.92167 14.9974 2.94962 14.7979L3.21108 12.8891C3.34054 11.9563 3.89648 11.1457 4.70245 10.7176L8.35789 8.78157C8.40449 8.75583 8.43953 8.71255 8.45563 8.66086C8.47173 8.60917 8.46763 8.55309 8.4442 8.50443C8.42603 8.46626 8.3967 8.43485 8.36031 8.41456C8.32391 8.39428 8.28225 8.38612 8.24112 8.39124L3.76828 9.0587C3.42938 9.10822 3.08411 9.08448 2.75469 8.98903C2.42527 8.89357 2.11898 8.7285 1.85552 8.50443L0.367962 7.24366C0.163022 7.06833 0.0329532 6.8179 0.00545299 6.54572C-0.0220472 6.27354 0.0551943 6.0011 0.220729 5.78643C0.381913 5.5816 0.613597 5.44795 0.868046 5.41301L4.68468 4.90559C4.80565 4.88818 4.92062 4.84066 5.01952 4.76717C5.11843 4.69368 5.19826 4.59646 5.25204 4.48403Z" fill="#fff"></path>
+                                </g>
+                                <defs>
+                                    <linearGradient id="paint0_linear_1221_53" x1="0" y1="0" x2="16" y2="16" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#FDD21A"></stop>
+                                        <stop offset="1" stop-color="#E47B03"></stop>
+                                    </linearGradient>
+                                    <clipPath id="clip0_1221_53">
+                                        <rect width="16" height="16" fill="white"></rect>
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                            <span id="product-buy-price">100</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gift Transfer Modal -->
+    <div class="gift-transfer-modal" id="gift-transfer-modal">
+        <div class="gift-transfer-modal-content">
+            <div class="gift-transfer-modal-header">
+                <button class="gift-transfer-modal-close" id="gift-transfer-modal-close">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="gift-transfer-modal-body">
+                <div class="gift-transfer-animation-container">
+                    <div class="gift-transfer-animation" id="gift-transfer-animation"></div>
+                </div>
+                <h2 class="gift-transfer-title" id="gift-transfer-title">Название подарка</h2>
+                <div class="gift-transfer-form">
+                    <label class="gift-transfer-label">ID пользователя</label>
+                    <input type="text" class="gift-transfer-input" id="gift-transfer-user-id" placeholder="Введите ID пользователя">
+                    <button class="gift-transfer-send-btn" id="gift-transfer-send-btn">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2 3L18 10L2 17V12L14 10L2 8V3Z" fill="currentColor"/>
+                        </svg>
+                        Отправить
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inventory Gift Modal -->
+    <div class="inventory-gift-modal" id="inventory-gift-modal">
+        <div class="inventory-gift-modal-content">
+            <div class="inventory-gift-modal-header">
+                <div></div>
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" class="inventory-gift-modal-close" id="inventory-gift-modal-close">
+                    <path d="M11.0002 13.1093L5.67784 18.4314C5.39411 18.7153 5.04263 18.8573 4.62339 18.8573C4.20416 18.8573 3.85267 18.7153 3.56894 18.4314C3.28503 18.1477 3.14307 17.7962 3.14307 17.377C3.14307 16.9577 3.28503 16.6062 3.56894 16.3225L8.89099 11.0002L3.56894 5.67784C3.28503 5.39411 3.14307 5.04263 3.14307 4.62339C3.14307 4.20416 3.28503 3.85267 3.56894 3.56894C3.85267 3.28503 4.20416 3.14307 4.62339 3.14307C5.04263 3.14307 5.39411 3.28503 5.67784 3.56894L11.0002 8.89099L16.3225 3.56894C16.6062 3.28503 16.9577 3.14307 17.377 3.14307C17.7962 3.14307 18.1477 3.28503 18.4314 3.56894C18.7153 3.85267 18.8573 4.20416 18.8573 4.62339C18.8573 5.04263 18.7153 5.39411 18.4314 5.67784L13.1093 11.0002L18.4314 16.3225C18.7153 16.6062 18.8573 16.9577 18.8573 17.377C18.8573 17.7962 18.7153 18.1477 18.4314 18.4314C18.1477 18.7153 17.7962 18.8573 17.377 18.8573C16.9577 18.8573 16.6062 18.7153 16.3225 18.4314L11.0002 13.1093Z" fill="currentColor"></path>
+                </svg>
+            </div>
+            <div class="inventory-gift-modal-body">
+                <div class="inventory-gift-display" id="inventory-gift-display">
+                    <div class="inventory-gift-background" id="inventory-gift-background"></div>
+                    <div class="inventory-gift-animation-large" id="inventory-gift-animation-large"></div>
+                    <div class="inventory-gift-image-container">
+                        <div class="inventory-gift-image-wrapper">
+                            <img class="inventory-gift-image" id="inventory-gift-image" alt="" src="">
+                            <div class="inventory-gift-overlay"></div>
+                        </div>
+                        <div class="inventory-gift-info-overlay">
+                            <div class="inventory-gift-name-wrapper">
+                                <div class="inventory-gift-name" id="inventory-gift-name">Holiday Drink</div>
+                                <svg width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="inventory-gift-arrow">
+                                    <path d="M3.99993 2.23324L1.43326 4.7999C1.29993 4.93324 1.14437 4.99712 0.966593 4.99157C0.788815 4.98601 0.63326 4.92212 0.499926 4.7999C0.366593 4.66657 0.297149 4.50824 0.291593 4.3249C0.286038 4.14157 0.349926 3.98324 0.48326 3.8499L3.04993 1.28324C3.30548 1.02768 3.62215 0.899902 3.99993 0.899902C4.3777 0.899902 4.69437 1.02768 4.94993 1.28324L7.51659 3.8499C7.64993 3.98324 7.71382 4.14157 7.70826 4.3249C7.7027 4.50824 7.63326 4.66657 7.49993 4.7999C7.36659 4.92212 7.21104 4.98601 7.03326 4.99157C6.85548 4.99712 6.69993 4.93324 6.56659 4.7999L3.99993 2.23324Z" fill="currentColor"></path>
+                                </svg>
+                            </div>
+                            <div class="inventory-gift-id" id="inventory-gift-id">#36671</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="inventory-gift-details">
+                    <table class="inventory-gift-table">
+                        <tbody>
+                            <tr>
+                                <td class="inventory-gift-table-label">model</td>
+                                <td class="inventory-gift-table-value">
+                                    <span class="inventory-gift-model" id="inventory-gift-model">Cotton Candy</span>
+                                    <div class="inventory-gift-percentage">2.7%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="inventory-gift-table-label">symbol</td>
+                                <td class="inventory-gift-table-value">
+                                    <span class="inventory-gift-model">Ice Skates</span>
+                                    <div class="inventory-gift-percentage">1.2%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="inventory-gift-table-label">backdrop</td>
+                                <td class="inventory-gift-table-value">
+                                    <span class="inventory-gift-model">Burnt Sienna</span>
+                                    <div class="inventory-gift-percentage">1.5%</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="inventory-gift-custom-actions">
+                    <button class="inventory-gift-custom-btn inventory-gift-upgrade-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20.71 16.71l-2.42-2.42a1 1 0 0 0-1.42 0l-3.58 3.58a1 1 0 0 0 0 1.42l2.42 2.42a1 1 0 0 0 1.42 0l3.58-3.58a1 1 0 0 0 0-1.42zM9 6l-4.29 4.29a1 1 0 0 0 0 1.42l2.42 2.42a1 1 0 0 0 1.42 0l3.58-3.58a1 1 0 0 0 0-1.42L9 6z" fill="currentColor"/>
+                            <path d="M17.73 11.47l-5.2-5.2a1 1 0 0 0-1.42 0L9 8.39a1 1 0 0 0 0 1.42l5.2 5.2a1 1 0 0 0 1.42 0l2.11-2.12a1 1 0 0 0 0-1.42z" fill="currentColor"/>
+                        </svg>
+                        Улучшение
+                    </button>
+                    <button class="inventory-gift-custom-btn inventory-gift-send-btn">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2 3L18 10L2 17V12L14 10L2 8V3Z" fill="currentColor"/>
+                        </svg>
+                        Отправить
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confetti Example</title>
+  <!-- Подключаем библиотеку canvas-confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+
+  <button id="hs-run-on-click-run-confetti"
+    class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+    type="button">
+    Run Confetti
+  </button>
+
+  <script>
+    (function () {
+      const runConfetti = document.querySelector('#hs-run-on-click-run-confetti');
+
+      runConfetti.addEventListener('click', () => {
+        // Левый мощный поток
+        confetti({
+          particleCount: 300, // x2 количество
+          spread: 80,
+          startVelocity: 55,
+          origin: { x: 0, y: 0.6 }
+        });
+
+        // Правый мощный поток
+        confetti({
+          particleCount: 300, // x2 количество
+          spread: 80,
+          startVelocity: 55,
+          origin: { x: 1, y: 0.6 }
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>
